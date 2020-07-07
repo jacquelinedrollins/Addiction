@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/profile"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Email</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list-header>
+    <ion-label>Current email: {{auth.user.email}}</ion-label>
+  </ion-list-header>
+  <ion-list no-margin padding>
+    <h6>Please enter your new email and then your current password to reauthenticate and update new email.</h6>
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <ion-item no-padding [class.invalid]="form.get('email').invalid">
+          <ion-label position="floating">New Email</ion-label>
+          <ion-input #input formControlName="email" autocomplete="off" type="email" required></ion-input>
+        </ion-item>
+        <div class="error" *ngIf="form.get('email').invalid && (form.get('email').touched || form.get('email').dirty)">Email is not valid</div>
+        
+        <ion-item no-padding [class.invalid]="form.get('pass').invalid">
+          <ion-label position="floating">Password</ion-label>
+          <ion-input formControlName="pass" autocomplete="off" type="password" minlength="6" required></ion-input>
+        </ion-item>
+        <div class="error" *ngIf="form.get('pass').hasError('required') && (form.get('pass').touched || form.get('pass').dirty)">Password is required</div>
+        <div class="error" *ngIf="form.get('pass').hasError('minlength') && (form.get('pass').touched || form.get('pass').dirty)">Password length must be >= 6 </div>
+
+        <div margin-vertical>
+          <ion-button type="submit" shape="round" expand="block" [disabled]="form.invalid">Save</ion-button>
+        </div>
+    </form>
+  </ion-list>
+</ion-content>

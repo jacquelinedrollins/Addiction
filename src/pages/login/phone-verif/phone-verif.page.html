@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+        <ion-back-button routerDirection="backward"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Verification</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding scroll="false">
+  <h6>A verification code has been sent to your mobile <b>+{{phone.area.callingCode}}{{phone.tel}}</b>. Please enter the verification code below.</h6>
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <ion-item no-padding margin-vertical>
+      <ion-label position="floating">Verification Code</ion-label>
+      <ion-input clearInput pattern="[0-9]*" no-margin type="tel" formControlName="code"></ion-input>
+    </ion-item>
+    <div class="error" *ngIf="form.get('code').hasError('minlength') && (form.get('code').touched || form.get('code').dirty)">Code must be 6 digit length</div>
+    <div class="error" *ngIf="form.get('code').hasError('maxlength') && (form.get('code').touched || form.get('code').dirty)">Code must be 6 digit length</div>
+    <div class="error" *ngIf="form.get('code').hasError('pattern') && (form.get('code').touched || form.get('code').dirty)">Code must be numeric</div>
+    <ion-button type="submit" icon-start margin-vertical [disabled]="loading || form.invalid" shape="round" expand="block" tappable>
+      <ion-spinner *ngIf="loading" slot="start"></ion-spinner>
+      Submit
+    </ion-button>
+  </form>
+  <!-- <div *ngIf="tick == 0; else nosend" >
+    <p text-center>Dont receive verification code?</p>
+    <ion-button type="submit" shape="round" fill="outline" tappable (click)="resend()">Resend Code</ion-button>
+  </div>
+  <ng-template #nosend>
+    <p text-center>Please wait <b>{{tick}} seconds</b> to resend</p>
+  </ng-template>
+
+  <ng-container *ngIf="!data.from" margin-top>
+    <div class="divider" margin-top>
+        <div class="text"> OR </div>
+    </div>
+    <div margin-top>
+      <ion-button type="button" tappable (click)="backToLogin()" shape="round" expand="block" color="secondary" shape="round" expand="block">Back to Login</ion-button>
+    </div>
+  </ng-container> -->
+</ion-content>

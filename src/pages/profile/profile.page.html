@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="primary">
+		<ion-item lines="none" class="profile" color="primary">
+			<ion-avatar slot="start" tappable>
+				<div class="img_wrapper">
+					<div class="default"></div>
+					<div class="img" [ngStyle]="{'background-image': 'url(' + (normalize(auth.user.avatar) || 'assets/img/user.jpg') + ')'}"></div>
+				</div>
+      </ion-avatar>
+      <ion-label text-wrap>
+        <h3>{{auth.user.name}}</h3>
+        <p>{{auth.user.email}}</p>
+      </ion-label>
+      <span *ngIf="auth.user.phone" slot="end" tappable><b>{{auth.user.phone}}</b></span>
+		</ion-item>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list margin-top>
+      <ion-item tappable routerLink="/tabs/profile/edit-profile" routerDirection="forward" detail="true">
+        <ion-label>Edit Profile</ion-label>
+      </ion-item>
+      <ion-item tappable routerLink="/tabs/profile/edit-email" routerDirection="forward" detail="true">
+        <ion-label>Edit Email</ion-label>
+      </ion-item>
+      <ion-item tappable routerLink="/tabs/profile/edit-password" routerDirection="forward" detail="true">
+        <ion-label>Edit Password</ion-label>
+      </ion-item>
+      <ion-item *ngIf="auth.user.phone" tappable routerLink="/tabs/profile/edit-phone" routerDirection="forward" detail="true">
+        <ion-label>Edit Phone Number</ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-item (click)="logout()" lines="none" detail="false">
+        <ion-label>Log Out</ion-label>
+      </ion-item>
+      
+      <p text-center style="color: grey;">&copy; 2019 Authy <br>v4</p>
+    </ion-list>
+</ion-content>

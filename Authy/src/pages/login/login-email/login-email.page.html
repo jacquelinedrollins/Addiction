@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+        <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Login using Email</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content scroll="false">
+  <ion-list no-margin padding margin-top>
+    <form margin-top [formGroup]="form" (ngSubmit)="submit()" autocomplete="off">
+
+    <ion-item no-padding [class.invalid]="form.get('email').invalid">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input placeholder="john@doe.com" formControlName="email" clearInput autocomplete="off" type="email" required></ion-input>
+    </ion-item>
+    <div class="error" *ngIf="form.get('email').invalid && (form.get('email').touched || form.get('email').dirty)">Email is not valid</div>
+
+    <ion-item no-padding [class.invalid]="form.get('pass').invalid">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input placeholder="Your password" formControlName="pass" clearInput autocomplete="off" type="password" minlength="6" required></ion-input>
+    </ion-item>
+    <div class="error" *ngIf="form.get('pass').hasError('required') && (form.get('pass').touched || form.get('pass').dirty)">Password is required</div>
+    <div class="error" *ngIf="form.get('pass').hasError('minlength') && (form.get('pass').touched || form.get('pass').dirty)">Password length must be > 6</div>
+  
+    <div margin-top>
+      <ion-button icon-start margin-top type="submit" shape="round" expand="block" [disabled]="form.invalid">
+        Sign In
+      </ion-button>
+      <ion-button margin-top fill="clear" expand="block" tappable routerLink="/login/forgot">Forgot password?</ion-button>
+    </div>
+    
+    </form>
+  </ion-list>
+</ion-content>

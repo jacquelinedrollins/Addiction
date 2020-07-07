@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      Welcome to Authy
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div padding>
+    <p>Hi {{auth.user.name}}, this will be your dashbord here. To manage your account, go to Profile tab.</p>
+    <p>With Authy, you can learn how to manage multiple linked account using Firebase Authentication.</p>
+    <p>Thanks for trying this app and hope you enjoy it!</p>
+  </div>
+
+  <ion-list>
+    <ion-item-divider><ion-label>Email</ion-label></ion-item-divider>
+    <ion-item>
+      <ion-icon name="mail" slot="start"></ion-icon>
+      <ion-label>{{auth.user.email}}</ion-label>
+      <ion-badge *ngIf="auth.user.emailVerified" slot="end" color="success">Verified</ion-badge>
+      <ion-button *ngIf="!auth.user.emailVerified" slot="end" fill="outline" tappable (click)="verifyEmail()">
+        Verify Email
+      </ion-button>
+    </ion-item>
+
+    <ion-item-divider margin-top><ion-label>Phone</ion-label></ion-item-divider>
+    <ion-item>
+      <ion-icon name="call" slot="start"></ion-icon>
+      <ion-label *ngIf="auth.user.phone; else nophone">{{auth.user.phone}}</ion-label>
+      <ng-template #nophone><ion-label>No phone available</ion-label></ng-template>
+      <ion-badge *ngIf="auth.user.phone" slot="end" color="success">Verified</ion-badge>
+      <ion-button *ngIf="!auth.user.phone" slot="end" fill="outline" tappable routerLink="/tabs/profile/edit-phone" routerDirection="forward">
+        Add Phone
+      </ion-button>
+    </ion-item>
+
+    <ion-item-divider margin-top><ion-label>Social Account</ion-label></ion-item-divider>
+    <ion-item>
+      <ion-icon name="logo-facebook" slot="start"></ion-icon>
+      <ion-label>Facebook {{auth.user.facebook ? '(' + auth.user.facebook.name + ')' : ''}}</ion-label>
+      <ion-button [color]="auth.user.facebook ? 'danger' : ''" tappable size="small" (click)="connectFB()" slot="end" [fill]="auth.user.facebook ? 'solid' : 'outline'">
+        <ion-icon slot="start" [name]="auth.user.facebook ? 'remove-circle' : 'link'"></ion-icon> {{auth.user.facebook ? 'Unlink' : 'Link'}}
+      </ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="logo-google" slot="start"></ion-icon>
+      <ion-label>Google {{auth.user.google ? '(' + (auth.user.google.name || auth.user.google.email) + ')' : ''}}</ion-label>
+      <ion-button [color]="auth.user.google ? 'danger' : ''" tappable size="small" (click)="connectGG()" slot="end" [fill]="auth.user.google ? 'solid' : 'outline'">
+        <ion-icon slot="start" [name]="auth.user.google ? 'remove-circle' : 'link'"></ion-icon> {{auth.user.google ? 'Unlink' : 'Link'}}
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

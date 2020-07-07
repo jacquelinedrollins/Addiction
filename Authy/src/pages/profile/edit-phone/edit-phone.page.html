@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button routerDirection="backward"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{auth.user.phone ? 'Edit' : 'Add'}} Phone Number</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list-header *ngIf="auth.user.phone">
+    <ion-label>Current phone: {{auth.user.phone}}</ion-label>
+  </ion-list-header>
+  <ion-list no-margin padding>
+    <h6>Please enter your new phone number.</h6>
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <ion-row no-padding formGroupName="phone">
+          <ion-col size="3" tappable>
+            <ion-item no-padding tappable>
+              <ion-label position="floating">Country</ion-label>
+              <ionic-selectable
+                [(ngModel)]="selected"
+                searchPlaceholder="Search country"
+                shouldFocusSearchbar="true"
+                headerColor="primary"
+                formControlName="area"
+                [items]="phones"
+                itemValueField="callingCode"
+                itemTextField="name"
+                [canSearch]="true">
+              </ionic-selectable>
+            </ion-item>
+          </ion-col>
+          <ion-col size="9">
+              <ion-item no-padding [class.invalid]="form.get('phone.tel').invalid">
+                <ion-label position="floating">New Phone Number</ion-label>
+                <ion-input type="tel" placeholder="e.g. 8128080xxxx" pattern="[0-9]*" clearInput formControlName="tel" autocomplete="off" required minlength="8"></ion-input>
+              </ion-item>
+              <div class="error" *ngIf="form.get('phone.tel').hasError('required') && (form.get('phone.tel').touched || form.get('phone.tel').dirty)">Phone is required</div>
+              <div class="error" *ngIf="form.get('phone.tel').hasError('minlength') && (form.get('phone.tel').touched || form.get('phone.tel').dirty)">Phone must be >= 8 characters</div>
+              <div class="error" *ngIf="form.get('phone.tel').hasError('maxlength') && (form.get('phone.tel').touched || form.get('phone.tel').dirty)">Phone number max length 15 characters</div>
+              <div class="error" *ngIf="form.get('phone.tel').hasError('pattern') && (form.get('phone.tel').touched || form.get('phone.tel').dirty)">Phone number must be numeric</div>
+          </ion-col>
+        </ion-row>
+        
+        <div margin-vertical>
+          <ion-button type="submit" shape="round" expand="block" [disabled]="form.invalid">Save</ion-button>
+          <div padding-top text-center color="dark">We will send code via SMS</div>
+        </div>
+    </form>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/profile"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div margin-top text-center tappable (click)="changeAvatar()">
+		<div class="img" [ngStyle]="{'background-image': 'url(' + (normalize(avatar) || 'assets/img/user.jpg') + ')'}"></div>
+		<p>Change Avatar</p>
+	</div>
+	<ion-list no-margin padding margin-top>
+		<form [formGroup]="form" (ngSubmit)="submit()" autocomplete="off">
+		<ion-item no-padding [class.invalid]="form.get('name') && form.get('name').invalid">
+			<ion-label position="floating">Name</ion-label>
+			<ion-input #input formControlName="name" name="name" autocomplete="off" [value]="auth.user.name" type="text" required placeholder="John Doe"></ion-input>
+		</ion-item>
+		<div class="error" *ngIf="form.get('name') && form.get('name').hasError('required') && (form.get('name').touched || form.get('name').dirty)">Name is required</div>
+
+		<ion-item no-padding [class.invalid]="form.get('dob') && form.get('dob').invalid">
+			<ion-label position="floating">Date of Birth</ion-label>
+			<ion-datetime [value]="auth.user.dob || '1994-12-15'" name="dob" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD" formControlName="dob" min="1950"></ion-datetime>
+		</ion-item>
+		<div class="error" *ngIf="form.get('dob') && form.get('dob').hasError('required') && (form.get('dob').touched || form.get('dob').dirty)">Date of Birth is required</div>
+		
+		<div margin-top>
+			<ion-button type="submit" tappable margin-top shape="round" expand="block" [disabled]="form.invalid">Save</ion-button>
+		</div>
+		</form>
+	</ion-list>
+</ion-content>

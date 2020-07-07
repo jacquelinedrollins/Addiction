@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+        <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Forgot Password</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding scroll="false">
+  <ion-list no-margin padding margin-top>
+      <h6>Can't access your account? Please enter your email below, we will send password reset link into your email.</h6>
+      <form margin-top [formGroup]="form" (ngSubmit)="submit()" autocomplete="off">
+          <ion-item no-padding [class.invalid]="form.get('email').invalid">
+            <ion-label position="floating">Email</ion-label>
+            <ion-input #input placeholder="john@doe.com" formControlName="email" clearInput autocomplete="off" type="email" required></ion-input>
+          </ion-item>
+          
+          <div class="error" *ngIf="form.get('email').invalid && (form.get('email').touched || form.get('email').dirty)">Email is not valid</div>
+          
+          <div margin-top>
+            <ion-button type="submit" shape="round" expand="block" [disabled]="form.invalid">Reset Password</ion-button>
+          </div>
+      </form>
+  </ion-list>
+</ion-content>
